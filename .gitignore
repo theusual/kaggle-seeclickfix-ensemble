@@ -1,0 +1,12 @@
+# ignore the PyCharm settings directory 
+.idea/**
+
+# ignore any compiled python files
+*.pyc
+
+# ignore any zipped archives
+*.zip
+
+# ignore any temp excel files
+~*.xlsx
+~*.xls

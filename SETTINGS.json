@@ -1,0 +1,40 @@
+{
+    
+    "file_bryan_submission": "Bryan/Submits/bryan_test_predictions.csv",
+    "file_miroslaw_submission": "Miroslaw/Submissions/ridge_39.csv",
+    "file_segment_ids": "segment_ids.csv",
+    "dir_ensemble_submissions": "Submissions/",
+    "avg_log_space": "y",
+    "target_scalars": { 
+			"num_views":    ".89",
+			"num_votes":    "1",
+			"num_comments": "1"
+		      },
+    "ensemble_segment_weights":  { 
+				     "remote_api": {
+						     "num_views":     {"0":".12","1":".88"},
+ 						     "num_votes":     {"0":".32","1":".68"},
+ 						     "num_comments":  {"0":".98","1":".02"}
+						   }, 
+                                     "chi_other":  {
+						     "num_views":     {"0":".42","1":".58"},
+ 						     "num_votes":     {"0":".35","1":".65"},
+ 						     "num_comments":  {"0":".02","1":".98"}
+						   }, 
+                                     "oak_other":  {
+						     "num_views":     {"0":".40","1":".60"},
+ 						     "num_votes":     {"0":".25","1":".75"},
+ 						     "num_comments":  {"0":".85","1":".15"}
+						   }, 
+                                     "new_haven":  {
+						     "num_views":     {"0":".98","1":".02"},
+ 						     "num_votes":     {"0":".02","1":".98"},
+ 						     "num_comments":  {"0":".95","1":".15"}
+						   }, 
+                                     "richmond":   {
+						     "num_views":     {"0":".667","1":".346"},
+ 						     "num_votes":     {"0":".20","1":".80"},
+ 						     "num_comments":  {"0":".98","1":".02"}
+						   } 
+                                  }
+}
