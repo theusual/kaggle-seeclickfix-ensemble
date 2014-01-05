@@ -1,4 +1,4 @@
-Kaggle See-Click-Fix Contest -- Winning Model
+Winning Model for Kaggle See-Click-Fix Contest
 ============================================================
 Prize winning solution to the SeeClickFix contest hosted on Kaggle.  Developed by teammates Bryan Gregory and Miroslaw Horbal.
 
@@ -20,7 +20,9 @@ Usage
 ========
 Ensemble weights for each segment of data are stored in SETTINGS.json along with the filepaths for the base input submission files and other misc. settings. Note that with regards to weights base submission 0 corresponds to Bryan's model and base submission 1 is Miroslaw's model.
 
-To run:
+Prior to running, submission files from the base models must already exist and have the correct file path set in SETTINGS.json.  If the submission files do not exist, then the individual models must first be ran from within their sub folders to create the base submission files.
+
+To run the ensemble code and generate ensemble submission:
 
       >>> python main.py
       
