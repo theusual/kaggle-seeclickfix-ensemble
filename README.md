@@ -3,7 +3,9 @@ Prize Winning Model for Kaggle See-Click-Fix Contest
 Prize winning solution to the SeeClickFix contest hosted on Kaggle.  Developed by teammates Bryan Gregory and Miroslaw Horbal.
 
 More contest info here: http://www.kaggle.com/c/see-click-predict-fix
+
 In-depth code description here:  http://bryangregory.com/Kaggle/DocumentationforSeeClickFix.pdf
+
 "How I Did It" blog post here: http://bryangregory.com/Kaggle/Kaggle-SeeClickFix-HowIDidIt.pdf
 
 Description
@@ -14,7 +16,7 @@ The code also has options to perform averaging in log space (log transformations
 
 Independent code repositories for the individual models are available here:
 
-Bryan's model: https://github.com/theusual/kaggle-see-click-fix
+Bryan's model: https://github.com/theusual/kaggle-seeclickfix
 
 Miroslaw's model: https://github.com/beegieb/kaggle_see_click_fix
 
