@@ -1,0 +1,327 @@
+{   "models": {
+        "ridge_39": { 
+            "model": "RidgeRMSLE",
+            "dataset": "Filtered_TFIDF_OHE_EF",
+            "target": "Filtered_Targets",
+            "args": { 
+                "alpha": 51,
+                "bound": [0, 1, 0] 
+            },
+            "validator": { 
+                "name": "train_test_split",
+                "args": { "n_train": 22500 }
+            }
+        }                            
+    },
+
+    "datasets": { 
+        "Train": { 
+            "input_data": [],
+            "transforms": [["get_train", { }]]
+        },
+                
+        "Test": { 
+            "input_data": [],
+            "transforms": [["get_test", { }]]
+        },
+        
+        "Targets": { 
+            "input_data": [],
+            "transforms": [["get_targets", { }]]
+        },
+                
+        "Filtered_Targets": { 
+            "input_data": ["Targets"],
+            "transforms": [["reduce_data", { "keep_n": 67126 }]]
+        },
+                
+        "TestIDS": { 
+            "input_data": ["Test"],
+            "transforms": [["get_ids", { }]]
+        },
+                           
+        "TrainIDS": { 
+            "input_data": ["Train"],
+            "transforms": [["get_ids", { }]]
+        },
+                
+        "Filtered_TrainIDS": {
+            "input_data": ["TrainIDS"],
+            "transforms": [["reduce_data", { "keep_n": 67126 }]]
+        },
+        
+        "Categories": {
+            "input_data": ["Cleanedup3"],
+            "transforms": [["create_city_and_api_groups", {}]]
+        },
+        
+        "Cleanedup3": { 
+            "input_data": ["Train", "Test"],
+            "transforms": [ 
+                ["concat_df", { 
+                    "ignore_index": true 
+                }],
+                ["fillna", { 
+                    "cols": ["description", "source", "tag_type"],
+                    "fill_val": "__missing__" 
+                }],
+                ["col2datetime", { 
+                    "col": "created_time",
+                    "datestr": "%Y-%m-%d %H:%M:%S"
+                }],
+                ["is_weekend", { }],
+                ["time_of_day", { }],
+                ["description_length", { }],
+                ["group_data", { 
+                    "cols": ["city", "source"],
+                    "degree": 2 
+                }],
+                ["group_data", { 
+                    "cols": ["city", "tag_type"],
+                    "degree": 2 
+                }],
+                ["group_data", {
+                    "cols": ["source", "tag_type"],
+                    "degree": 2 
+                }],
+                ["group_data", {
+                    "cols": ["city", "source", "tag_type"],
+                    "degree": 3 
+                }],
+                ["group_data", { 
+                    "cols": ["city", "time_of_day"],
+                    "degree": 2 
+                }],
+                ["group_data", { 
+                    "cols": ["zipcode", "source"],
+                    "degree": 2 
+                }],
+                ["replace_col_val", {
+                    "column": "neighborhood",
+                    "repcol": "zipcode",
+                    "val": "UNKNOWN"
+                }],
+                ["knn_threshold", { 
+                    "column": "zipcode",
+                    "threshold": 24 
+                }],
+                ["knn_threshold", { 
+                    "column": "neighborhood",
+                    "threshold": 15 
+                }],
+                ["knn_threshold", { 
+                    "column": "zipcode_source",
+                    "threshold": 24
+                }]
+            ]
+        },
+        
+        "ExtraFeatures": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["get_df_cols", { 
+                    "cols": ["is_weekend", "description_length"] 
+                }]
+            ]
+        },
+        
+        "UnigramTFIDF": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["text_vectorizer", { 
+                    "cols": ["summary", "description"],
+                    "method": "tfidf",
+                    "max_gram": 1,
+                    "min_df": 5,
+                    "max_df": 0.99999,
+                    "token_pattern": "__\\w+__|\\w+"
+                }]
+            ]
+        },
+        
+        "BigramTFIDF": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["text_vectorizer", { 
+                    "cols": ["summary", "description"],
+                    "method": "tfidf",
+                    "min_gram": 2,
+                    "max_gram": 2,
+                    "min_df": 5,
+                    "max_df": 0.99999,
+                    "token_pattern": "__\\w+__|\\w+"
+                }]
+            ]
+        },
+            
+        "TrigramTFIDF": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["text_vectorizer", { 
+                    "cols": ["summary", "description"],
+                    "method": "tfidf",
+                    "min_gram": 3,
+                    "max_gram": 3,
+                    "min_df": 11,
+                    "max_df": 0.99999,
+                    "token_pattern": "__\\w+__|\\w+"
+                }]
+            ]
+        },
+            
+        "CombinedTFIDF": { 
+            "input_data": ["UnigramTFIDF", "BigramTFIDF", "TrigramTFIDF"],
+            "transforms": [["hstack", { }]]
+        },
+        
+        "TagOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "tag_type",
+                    "min_freq": 24
+                }]
+            ]
+        },
+        
+        "SourceOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "source",
+                    "min_freq": 1
+                }]
+            ]
+        },
+        
+        "CityOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "city",
+                    "min_freq": 1
+                }]
+            ]
+        },
+        
+        "ZipOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "zipcode",
+                    "min_freq": 24
+                }]
+            ]
+        },
+            
+        "TimeOfDayOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "time_of_day",
+                    "min_freq": 1
+                }]
+            ]
+        },
+            
+        "NeighborhoodOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "neighborhood",
+                    "min_freq": 15
+                }]
+            ]
+        },
+        
+        "SourceTagOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "source_tag_type",
+                    "min_freq": 24
+                }]
+            ]
+        },
+                
+        "CityTagOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "city_tag_type",
+                    "min_freq": 24
+                }]
+            ]
+        },
+        
+        "CitySourceOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "city_source",
+                    "min_freq": 24
+                }]
+            ]
+        },
+        
+        "CitySourceTagOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "city_source_tag_type",
+                    "min_freq": 24
+                }]
+            ]
+        },
+            
+        "CityToDOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "city_time_of_day",
+                    "min_freq": 24
+                }]
+            ]
+        },
+        
+        "ZipSourceOHE": { 
+            "input_data": ["Cleanedup3"],
+            "transforms": [
+                ["columnOHE", {
+                    "column": "zipcode_source",
+                    "min_freq": 24
+                }]
+            ]
+        },
+        
+        "STTCZN_OHE": { 
+            "input_data": ["SourceOHE", 
+                           "TagOHE", 
+                           "CityOHE",
+                           "ZipOHE",
+                           "NeighborhoodOHE",
+                           "TimeOfDayOHE",
+                           "SourceTagOHE",
+                           "CitySourceOHE",
+                           "CityTagOHE",
+                           "ZipSourceOHE",
+                           "CityToDOHE"],
+            "transforms": [["hstack", { }]]
+        },
+        
+        "TFIDF_OHE_EF": { 
+            "input_data": ["CombinedTFIDF", 
+                           "STTCZN_OHE",
+                           "ExtraFeatures"],
+            "transforms": [["hstack", { }]]
+        },
+        
+        "Filtered_TFIDF_OHE_EF": { 
+            "input_data": ["TFIDF_OHE_EF", "Targets"],
+            "transforms": [
+                ["sparse_reduce_and_filter", { "keep_n_train": 67126 }]
+            ]
+        }
+    }
+}
+

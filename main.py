@@ -6,6 +6,9 @@ using segment based averaging.
 Ensemble weights for each segment of data are stored in SETTINGS.json along with the filepaths for the base input
 submission files.  Note that base submission 0 corresponds to Bryan's model and base submission 1 is Miroslaw's model.
 
+This relies on already generated submission files from the base models, so base models must be run prior to performing
+the ensemble.
+
 Requires: PANDAS >.13
           NUMPY
 """
@@ -13,10 +16,12 @@ __author__ = ['Bryan Gregory','Miroslaw Horbal']
 __email__ = ['bryan.gregory1@gmail.com','miroslaw@gmail.com']
 __date__ = '01-04-2013'
 
-#internal
+#Internal modules
 import utils
+#Start logger to record all info, warnings, and errors to Logs/logfile.log
+log = utils.start_logging(__name__)
 
-#external
+#External modules
 import sys
 import pandas as pd
 import numpy as np
@@ -32,11 +37,11 @@ def main():
     targets = segment_weights[segments[0]].keys()
 
     #---Output the segment weights to be used for ensemble averaging of base submissions---#
-    utils.info('==========ENSEMBLE WEIGHTS (B,M)============')
+    log.info('==========ENSEMBLE WEIGHTS (B,M)============')
     for segment in segment_weights:
-        utils.info(segment.upper()+':')
+        log.info(segment.upper()+':')
         for target in segment_weights[segment]:
-            utils.info('    '+target.upper()+' -- ['+segment_weights[segment][target]['0']+','+
+            log.info('    '+target.upper()+' -- ['+segment_weights[segment][target]['0']+','+
                       segment_weights[segment][target]['1']+']')
 
     #---Load each base submission to a list of dataframes---#
@@ -44,31 +49,32 @@ def main():
     for file in base_filepaths:
         try:
             base_subs.append(pd.read_csv(file).set_index(['id'], drop=False).sort())
-            utils.info('Base submission successfully loaded: %s.' % file)
+            log.info('Base submission successfully loaded: %s.' % file)
         except IOError:
-            utils.info('Base submission file does not exist: %s.  Run base model to generate submission file or update '
-                       'base submission filepath in SETTINGS.json.' % file)
+            log.info('Base submission file does not exist: %s. Run base model to generate, or update filepath.' %file)
+            sys.exit('---Exiting---')
+
     utils.line_break()
 
     #---Load id's labeled with segments to a dataframe used for segment based averaging---#
     file = settings['file_segment_ids']
     try:
         segment_ids = pd.read_csv(file)
-        utils.info('Segment IDs successfully loaded from: %s.' % file)
+        log.info('Segment IDs successfully loaded from: %s.' % file)
     except IOError:
-        utils.info('Segment IDs file does not exist: %s. Update filepath in SETTINGS.json.' % file)
+        log.info('Segment IDs file does not exist: %s. Update filepath in SETTINGS.json.' % file)
     utils.line_break()
 
     #---Transform base predictions to log space prior to averaging, if selected in settings---#
     if settings['avg_log_space'] == 'y':
-        utils.info('Transforming base predictions to log space prior to averaging.')
+        log.info('Transforming base predictions to log space prior to averaging.')
         for i in range(len(base_subs)):
             for target in targets:
                 base_subs[i][target] = np.log(base_subs[i][target]+1)
         utils.line_break()
 
     #---Apply segment based weights to each base submission then combine them to create ensemble submission---#
-    utils.info('Applying segment weights to base submissions then combining to create ensemble.')
+    log.info('Applying segment weights to base submissions then combining to create ensemble.')
     for i in range(len(base_subs)):
         #Merge the segment labels from the segment id's file with the base submission dataframe
         base_subs[i] = base_subs[i].merge(segment_ids,on='id',how='inner')
@@ -85,7 +91,7 @@ def main():
 
     #---Transform ensemble predictions back to normal, if use log space averaging was selected in settings---#
     if settings['avg_log_space'] == 'y':
-        utils.info('Transforming ensemble predictions back to normal from log space.')
+        log.info('Transforming ensemble predictions back to normal from log space.')
         for target in targets:
             ensemble_sub[target] = np.exp(ensemble_sub[target])-1
         utils.line_break()
@@ -98,11 +104,11 @@ def main():
     timestamp = datetime.now().strftime('%m-%d-%y_%H%M')
     filename = settings['dir_ensemble_submissions']+'ensemble_predictions_'+timestamp+'.csv'
     ensemble_sub.to_csv(filename, index=False)
-    utils.info('Ensemble submission saved: %s' % filename)
+    log.info('Ensemble submission saved: %s' % filename)
     utils.line_break()
 
     #End main
-    utils.info('Program executed successfully without error! Exiting.')
+    log.info('Program executed successfully without error! Exiting.')
 
 if __name__ == '__main__':
     sys.exit(main())

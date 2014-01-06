@@ -10,3 +10,6 @@
 # ignore any temp excel files
 ~*.xlsx
 ~*.xls
+
+# ignore the python_Console_log.py generated from ipython
+python_console_log.py

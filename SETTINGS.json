@@ -1,6 +1,6 @@
 {
     
-    "file_bryan_submission": "Bryan/Submits/bryan_test_predictions.csv",
+    "file_bryan_submission": "Bryan/Output/bryan_test_predictions.csv",
     "file_miroslaw_submission": "Miroslaw/Submissions/ridge_39.csv",
     "file_segment_ids": "segment_ids.csv",
     "dir_ensemble_submissions": "Submissions/",

@@ -5,32 +5,37 @@ __author__ = 'Bryan Gregory'
 __email__ = 'bryan.gregory1@gmail.com'
 __date__ = '09-06-2013'
 
+import logging
 import json
 
-def info(msg):
-    """Display and log informational messages
-    """
-    print msg
-    log(msg)
+def start_logging(scope_name):
+    #Set logger to display INFO level and above
+    log = logging.getLogger(scope_name)
+    log.setLevel(logging.INFO)
 
-def log(msg):
-    """Log to log file
-    """
-    #TODO: Implement logging
-    pass
+    file_log_handler = logging.FileHandler('Logs/logfile.log')
+    log.addHandler(file_log_handler)
+    stderr_log_handler = logging.StreamHandler()
+    log.addHandler(stderr_log_handler)
+
+    # Append date/time
+    formatter = logging.Formatter('%(asctime)s--%(levelname)s--%(module)s--%(message)s')
+    file_log_handler.setFormatter(formatter)
+    stderr_log_handler.setFormatter(formatter)
+    return log
 
 def line_break():
-    """Print and log a standard line break
+    """Returns a standard line break for improved print/log readability
     """
     line_break='============================================'
-    print line_break
-    log(line_break)
+    return line_break
 
 def load_settings(filename='SETTINGS.json'):
-    """Load environment settings to dict variables
+    """Load program settings and model settings to dict variables
     """
-    line_break()
-    info('=============LOADING SETTINGS===============')
+    log = start_logging(__name__)
+    log.info('=============LOADING SETTINGS===============')
     settings = json.loads(open(filename).read())
-    line_break()
+    log.info('ENVIRONMENT SETTINGS: ')
+    log.info(settings)
     return settings

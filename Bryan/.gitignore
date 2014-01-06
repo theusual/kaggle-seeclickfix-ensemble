@@ -1,0 +1,24 @@
+# ignore the PyCharm settings directory 
+.idea/**
+
+#ignore the submissions and data directories due to size contraints
+Submits/**
+
+#ignore the Data-old folder -- used for storing old data files not actively used
+Data-old/**
+
+# ignore any JSON data files (file size too large)
+*.json
+
+# ignore any compiled python files
+*.pyc
+
+# ignore any zipped archives
+*.zip
+
+# ignore any temp excel files
+~*.xlsx
+~*.xls
+
+# ignore the python_Console_log.py generated from ipython
+python_console_log.py
