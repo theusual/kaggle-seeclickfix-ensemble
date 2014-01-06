@@ -16,7 +16,7 @@ The code also has options to perform averaging in log space (log transformations
 
 Independent code repositories for the individual models are available here:
 
-Bryan's model: https://github.com/theusual/kaggle-seeclickfix
+Bryan's model: https://github.com/theusual/kaggle-seeclickfix-model
 
 Miroslaw's model: https://github.com/beegieb/kaggle_see_click_fix
 
