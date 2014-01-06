@@ -1,6 +1,8 @@
-Prize Winning Model for Kaggle See-Click-Fix Contest
+Prize Winning Ensemble Model for Kaggle See-Click-Fix Contest
 ============================================================
-Prize winning solution to the SeeClickFix contest hosted on Kaggle.  Developed by teammates Bryan Gregory and Miroslaw Horbal.
+Prize winning solution to the SeeClickFix contest hosted on Kaggle, developed by teammates Bryan Gregory and Miroslaw Horbal. The purpose of the contest was to train a model (as scored by RMSLE) using supervised learning that will accurately predict the views, votes, and comments that an issue posted to the www.seeclickfix.com website will receive.
+
+This code uses a segment based weights to create an averaged ensemble from both our individually developed models (repository links below).
 
 More contest info here: http://www.kaggle.com/c/see-click-predict-fix
 
