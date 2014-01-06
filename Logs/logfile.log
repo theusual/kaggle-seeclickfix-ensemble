@@ -1,0 +1,32 @@
+2014-01-05 18:44:33,157--INFO--utils--=============LOADING SETTINGS===============
+2014-01-05 18:44:33,157--INFO--utils--ENVIRONMENT SETTINGS: 
+2014-01-05 18:44:33,157--INFO--utils--{u'file_miroslaw_submission': u'Miroslaw/Submissions/ridge_39.csv', u'file_bryan_submission': u'Bryan/Output/bryan_test_predictions.csv', u'dir_ensemble_submissions': u'Submissions/', u'target_scalars': {u'num_comments': u'1', u'num_views': u'.89', u'num_votes': u'1'}, u'avg_log_space': u'y', u'file_segment_ids': u'segment_ids.csv', u'ensemble_segment_weights': {u'richmond': {u'num_comments': {u'1': u'.02', u'0': u'.98'}, u'num_views': {u'1': u'.346', u'0': u'.667'}, u'num_votes': {u'1': u'.80', u'0': u'.20'}}, u'remote_api': {u'num_comments': {u'1': u'.02', u'0': u'.98'}, u'num_views': {u'1': u'.88', u'0': u'.12'}, u'num_votes': {u'1': u'.68', u'0': u'.32'}}, u'new_haven': {u'num_comments': {u'1': u'.15', u'0': u'.95'}, u'num_views': {u'1': u'.02', u'0': u'.98'}, u'num_votes': {u'1': u'.98', u'0': u'.02'}}, u'chi_other': {u'num_comments': {u'1': u'.98', u'0': u'.02'}, u'num_views': {u'1': u'.58', u'0': u'.42'}, u'num_votes': {u'1': u'.65', u'0': u'.35'}}, u'oak_other': {u'num_comments': {u'1': u'.15', u'0': u'.85'}, u'num_views': {u'1': u'.60', u'0': u'.40'}, u'num_votes': {u'1': u'.75', u'0': u'.25'}}}}
+2014-01-05 18:44:33,157--INFO--main--==========ENSEMBLE WEIGHTS (B,M)============
+2014-01-05 18:44:33,158--INFO--main--RICHMOND:
+2014-01-05 18:44:33,158--INFO--main--    NUM_COMMENTS -- [.98,.02]
+2014-01-05 18:44:33,158--INFO--main--    NUM_VIEWS -- [.667,.346]
+2014-01-05 18:44:33,158--INFO--main--    NUM_VOTES -- [.20,.80]
+2014-01-05 18:44:33,158--INFO--main--REMOTE_API:
+2014-01-05 18:44:33,158--INFO--main--    NUM_COMMENTS -- [.98,.02]
+2014-01-05 18:44:33,158--INFO--main--    NUM_VIEWS -- [.12,.88]
+2014-01-05 18:44:33,159--INFO--main--    NUM_VOTES -- [.32,.68]
+2014-01-05 18:44:33,159--INFO--main--NEW_HAVEN:
+2014-01-05 18:44:33,159--INFO--main--    NUM_COMMENTS -- [.95,.15]
+2014-01-05 18:44:33,159--INFO--main--    NUM_VIEWS -- [.98,.02]
+2014-01-05 18:44:33,159--INFO--main--    NUM_VOTES -- [.02,.98]
+2014-01-05 18:44:33,159--INFO--main--CHI_OTHER:
+2014-01-05 18:44:33,159--INFO--main--    NUM_COMMENTS -- [.02,.98]
+2014-01-05 18:44:33,160--INFO--main--    NUM_VIEWS -- [.42,.58]
+2014-01-05 18:44:33,160--INFO--main--    NUM_VOTES -- [.35,.65]
+2014-01-05 18:44:33,160--INFO--main--OAK_OTHER:
+2014-01-05 18:44:33,160--INFO--main--    NUM_COMMENTS -- [.85,.15]
+2014-01-05 18:44:33,160--INFO--main--    NUM_VIEWS -- [.40,.60]
+2014-01-05 18:44:33,160--INFO--main--    NUM_VOTES -- [.25,.75]
+2014-01-05 18:44:33,300--INFO--main--Base submission successfully loaded: Bryan/Output/bryan_test_predictions.csv.
+2014-01-05 18:44:33,448--INFO--main--Base submission successfully loaded: Miroslaw/Submissions/ridge_39.csv.
+2014-01-05 18:44:33,502--INFO--main--Segment IDs successfully loaded from: segment_ids.csv.
+2014-01-05 18:44:33,503--INFO--main--Transforming base predictions to log space prior to averaging.
+2014-01-05 18:44:33,546--INFO--main--Applying segment weights to base submissions then combining to create ensemble.
+2014-01-05 18:44:35,519--INFO--main--Transforming ensemble predictions back to normal from log space.
+2014-01-05 18:44:36,163--INFO--main--Ensemble submission saved: Submissions/ensemble_predictions_01-05-14_1844.csv
+2014-01-05 18:44:36,163--INFO--main--Program executed successfully without error! Exiting.
